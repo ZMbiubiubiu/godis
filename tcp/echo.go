@@ -56,6 +56,7 @@ func (h *EchoHandler) Handle(ctx context.Context, conn net.Conn) {
 	for {
 		// may occurs: client EOF, client timeout, server early close
 		msg, err := reader.ReadString('\n')
+		logger.Info("server echo receiver msg", msg)
 		if err != nil {
 			if err == io.EOF {
 				logger.Info("connection close")

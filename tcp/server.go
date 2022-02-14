@@ -70,7 +70,7 @@ func ListenAndServe(listener net.Listener, handler tcp.Handler, closeChan <-chan
 			break
 		}
 		// handle
-		logger.Info("accept link")
+		logger.Info("server accept address", conn.LocalAddr())
 		waitDone.Add(1)
 		go func() {
 			defer func() {

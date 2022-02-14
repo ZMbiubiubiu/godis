@@ -2,6 +2,7 @@ package tcp
 
 import (
 	"bufio"
+	"github.com/hdt3213/godis/lib/logger"
 	"math/rand"
 	"net"
 	"strconv"
@@ -18,6 +19,8 @@ func TestListenAndServe(t *testing.T) {
 		return
 	}
 	addr := listener.Addr().String()
+	logger.Info("server address", addr)
+
 	go ListenAndServe(listener, MakeEchoHandler(), closeChan)
 
 	conn, err := net.Dial("tcp", addr)
@@ -25,7 +28,9 @@ func TestListenAndServe(t *testing.T) {
 		t.Error(err)
 		return
 	}
-	for i := 0; i < 10; i++ {
+	logger.Info("client address", conn.LocalAddr())
+
+	for i := 0; i < 3; i++ {
 		val := strconv.Itoa(rand.Int())
 		_, err = conn.Write([]byte(val + "\n"))
 		if err != nil {
